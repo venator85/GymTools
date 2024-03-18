@@ -1,0 +1,24 @@
+:root {
+  --dark-moss-green: #606c38;
+  --pakistan-green: #283618;
+  --cornsilk: #fefae0;
+  --earth-yellow: #dda15e;
+  --tigers-eye: #bc6c25;
+}
+
+.v-table {
+  background: transparent !important;
+}
+
+.v-table table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+h3 {
+  color: var(--cornsilk);
+}
+
+.v-table thead {
+  color: var(--tigers-eye);
+}
