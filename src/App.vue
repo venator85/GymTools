@@ -88,30 +88,30 @@ const computedDataState = computed(() => {
 })
 
 function compute(weightPerSide, reps, barbellWeight, rounding) {
-  const oneRepMaxValues = Array(11).fill().map((_, index) => {
-    const percentage = 100 - index * 5
+  const oneRepMaxValues = []
+  for (let percentage = 100; percentage >= 50; percentage -= 5) {
     const weight = fromBarbellSideWeight(weightPerSide, barbellWeight) * percentage / 100
     const oneRepMax = wathen(weight, reps)
-    return {
+    oneRepMaxValues.push({
       percentage: percentage,
       percentageTypedWeight: toBarbellSideWeight(weight, barbellWeight, rounding),
       oneRepMax: oneRepMax,
       oneRepMaxPerSide: toBarbellSideWeight(oneRepMax, barbellWeight, rounding)
-    }
-  })
+    })
+  }
 
   const oneRepMax = oneRepMaxValues[0].oneRepMax
 
-  const repsTargetAParitaDiMassimale = Array(15).fill().map((_, index) => {
-    const repsTarget = index + 1
+  const repsTargetAParitaDiMassimale = [];
+  for (let repsTarget = 2; repsTarget <= 15; repsTarget++) {
     const equivWeight = wathenInv(oneRepMax, repsTarget)
-    return {
+    repsTargetAParitaDiMassimale.push({
       repsTarget: repsTarget,
       equivWeight: equivWeight,
       equivWeightBarbellSide: toBarbellSideWeight(equivWeight, barbellWeight, rounding),
       halfEquivWeight: equivWeight / 2
-    }
-  })
+    })
+  }
 
   return {
     oneRepMaxValues: oneRepMaxValues,
