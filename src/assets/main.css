@@ -22,3 +22,11 @@ h3 {
 .v-table thead {
   color: var(--tigers-eye);
 }
+
+.colophon {
+  color: var(--dark-moss-green);
+}
+
+a {
+  color: var(--earth-yellow);
+}

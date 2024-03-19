@@ -67,6 +67,11 @@
         </tr>
       </tbody>
     </v-table>
+
+    <p class="colophon mt-5">
+      Made for 💪 by <a href="https://alessiobianchi.eu">Alessio Bianchi</a> &mdash;
+      sources at <a href="https://github.com/venator85/GymTools">github</a>
+    </p>
   </v-container>
 </template>
 
