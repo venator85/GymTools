@@ -2,11 +2,15 @@
   <v-container fluid>
     <v-row>
       <v-col cols="8">
-        <v-text-field label="Peso per lato" v-model="weightPerSideState"></v-text-field>
+        <v-text-field type="number" inputmode="decimal" label="Peso per lato"
+          v-model="weightPerSideState" clearable></v-text-field>
       </v-col>
 
       <v-col cols="4">
-        <v-text-field type="number" label="Reps" v-model="repsState"></v-text-field>
+        <v-text-field type="number"
+            inputmode="numeric"
+            @keypress="filter(event)"
+            label="Reps" v-model="repsState" clearable></v-text-field>
       </v-col>
     </v-row>
 
@@ -75,9 +79,27 @@
   </v-container>
 </template>
 
+<script>
+const filter = (e) => {
+  e = (e) ? e : window.event;
+  console.log(e);
+  const input = e.target.value.toString() + e.key.toString();
+
+  if (!/^[0-9]*$/.test(input)) {
+    e.preventDefault();
+  } else {
+    return true;
+  }
+}
+
+</script>
+
 <script setup>
 import { ref, computed } from 'vue'
 import { wathen, wathenInv, toBarbellSideWeight, fromBarbellSideWeight } from './logic.js'
+
+
+
 
 const weightPerSideState = ref('50')
 const repsState = ref('6')
@@ -85,10 +107,10 @@ const barbellWeightState = ref('20')
 const roundingState = ref('1.25')
 
 const computedDataState = computed(() => {
-  const weightPerSide = parseFloat(weightPerSideState.value)
+  const weightPerSide = numParse(weightPerSideState.value)
   const reps = parseInt(repsState.value)
-  const barbellWeight = parseFloat(barbellWeightState.value)
-  const rounding = parseFloat(roundingState.value)
+  const barbellWeight = numParse(barbellWeightState.value)
+  const rounding = numParse(roundingState.value)
   return compute(weightPerSide, reps, barbellWeight, rounding)
 })
 
@@ -122,6 +144,10 @@ function compute(weightPerSide, reps, barbellWeight, rounding) {
     oneRepMaxValues: oneRepMaxValues,
     repsTargetAParitaDiMassimale: repsTargetAParitaDiMassimale
   }
+}
+
+function numParse(string) {
+  return parseFloat(string.replace(",", "."))
 }
 
 function numFormat(number) {
