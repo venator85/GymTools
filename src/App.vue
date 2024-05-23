@@ -2,15 +2,11 @@
   <v-container fluid>
     <v-row>
       <v-col cols="8">
-        <v-text-field type="number" inputmode="decimal" label="Peso per lato"
-          v-model="weightPerSideState" clearable></v-text-field>
+        <v-text-field type="number" inputmode="decimal" label="Peso per lato" v-model="weightPerSideState" clearable></v-text-field>
       </v-col>
 
       <v-col cols="4">
-        <v-text-field type="number"
-            inputmode="numeric"
-            @keypress="filter(event)"
-            label="Reps" v-model="repsState" clearable></v-text-field>
+        <v-text-field id="tfReps" type="text" inputmode="numeric" label="Reps" v-model="repsState" clearable></v-text-field>
       </v-col>
     </v-row>
 
@@ -79,27 +75,9 @@
   </v-container>
 </template>
 
-<script>
-const filter = (e) => {
-  e = (e) ? e : window.event;
-  console.log(e);
-  const input = e.target.value.toString() + e.key.toString();
-
-  if (!/^[0-9]*$/.test(input)) {
-    e.preventDefault();
-  } else {
-    return true;
-  }
-}
-
-</script>
-
 <script setup>
 import { ref, computed } from 'vue'
 import { wathen, wathenInv, toBarbellSideWeight, fromBarbellSideWeight } from './logic.js'
-
-
-
 
 const weightPerSideState = ref('50')
 const repsState = ref('6')
