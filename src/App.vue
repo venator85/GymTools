@@ -10,6 +10,12 @@
       </v-col>
     </v-row>
 
+    <v-row>
+      <v-checkbox v-model="barbellIncludedState" label="Includi bilanciere" class="ml-3"></v-checkbox>
+
+      <v-text-field :disabled="!barbellIncludedState" label="Peso bilanciere in kg" v-model="barbellWeightState" class="ml-3 mr-3"></v-text-field>
+    </v-row>
+
     <h3>Calcolo massimale</h3>
 
     <v-table density="compact">
@@ -83,11 +89,12 @@ const weightPerSideState = ref('50')
 const repsState = ref('6')
 const barbellWeightState = ref('20')
 const roundingState = ref('1.25')
+const barbellIncludedState = ref(true)
 
 const computedDataState = computed(() => {
   const weightPerSide = numParse(weightPerSideState.value)
   const reps = parseInt(repsState.value)
-  const barbellWeight = numParse(barbellWeightState.value)
+  const barbellWeight = barbellIncludedState.value ? numParse(barbellWeightState.value) : 0
   const rounding = numParse(roundingState.value)
   return compute(weightPerSide, reps, barbellWeight, rounding)
 })
